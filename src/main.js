@@ -5,7 +5,13 @@ import App from './App.vue'
 import './assets/css/reset.css'
 //引入border.css,1像素边框解决方案
 import './assets/css/border.css'
-// import fastClick from 'fastclick'
-// fastClick.attach(document.body)
+import FastClick from 'fastclick'
+FastClick(document.body)
+import { createPinia } from 'pinia'
+import piniaPersist from 'pinia-plugin-persist'
+const store = createPinia()
+store.use(piniaPersist)
 
-createApp(App).mount('#app')
+const app = createApp(App);
+app.use(store) ;
+app.mount('#app');

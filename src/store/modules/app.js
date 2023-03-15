@@ -22,7 +22,7 @@ export default defineStore('storeApp', {
   persist: {
     enabled: true,
     strategies: [
-      { storage: sessionStorage, paths: ['themeType'] }
+      { storage: sessionStorage, paths: ['themeType'] },
       { storage: sessionStorage, paths: ['bgm'] }
     ],
   },
