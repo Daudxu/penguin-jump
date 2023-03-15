@@ -25,7 +25,7 @@ const handleClickStart = () => {
 
 const audioBgm = () => {
 	var bgm = new Audio('./audio/bgm.mp3');
-	bgm.volume = .07
+	bgm.volume = 0.75
 	bgm.play();
   bgm.loop = true;
 }

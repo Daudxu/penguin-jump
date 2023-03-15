@@ -305,14 +305,14 @@ class LittleMan {
   // 成功跳成功的背景音乐
   jumpBgm(){
     var bgm = new Audio('./audio/jump.mp3');
-    bgm.volume = .07
+    bgm.volume =  0.75
     bgm.play();
   }
 
   // 失败的背景音乐
   failBgm(){
     var bgm = new Audio('./audio/fall.mp3');
-    bgm.volume = .07
+    bgm.volume =  0.75
     bgm.play();
   }
 
