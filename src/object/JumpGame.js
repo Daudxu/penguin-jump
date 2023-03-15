@@ -1,6 +1,6 @@
 import Stage from './Stage';
 import BoxGroup from './BoxGroup';
-import LittleMan from './LittleMan';
+import LittleMan from './LittleMan.js';
 import {setFrameAction} from '../utils/TweenUtil';
 
 export default class JumpGame {
@@ -41,6 +41,7 @@ export default class JumpGame {
   initLittleMan() {
     // 小人初始化
     this.littleMan = new LittleMan(this.stage, this.boxGroup);
+    console.log(this.littleMan)
     // 将小人给盒子一份，方便盒子移动的时候带上小人
     this.boxGroup.setLittleMan(this.littleMan);
     // 加入舞台

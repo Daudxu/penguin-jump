@@ -319,7 +319,6 @@ class LittleMan {
     bgm.play();
     const storeObj  = Store()
     const objBgm = computed(() => storeObj.useAppStore.getBgm)
-    console.log(objBgm.value)
     objBgm.value.pause();
   }
 

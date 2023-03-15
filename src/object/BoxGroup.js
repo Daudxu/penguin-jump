@@ -69,7 +69,6 @@ export default class BoxGroup {
       box = new CubeBox(this.last);
     } else {
       const index = Math.ceil(Math.random() * BoxList.length - 1);
-
       box = this.getBoxInstance(index);
     }
 
