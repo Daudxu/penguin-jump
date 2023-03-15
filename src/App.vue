@@ -30,6 +30,10 @@ const audioBgm = () => {
 	bgm.volume = 0.75
 	bgm.play();
   bgm.loop = true;
+  // setTimeout(()=>{
+  //   bgm.pause();
+  // }, 3000)
+  console.log(bgm)
   Pinia.useAppStore.setBgm(bgm)
 }
 </script>

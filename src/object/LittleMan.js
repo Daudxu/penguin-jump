@@ -13,6 +13,9 @@ import {animateFrame} from '../utils/TweenUtil';
 import Box from './Box';
 import Particle from './Particle';
 import Tail from './Tail';
+import {storeToRefs} from "pinia"
+import { computed, toRefs } from 'vue'
+import Store from '../store/index.js'
 
 class LittleMan {
 
@@ -314,6 +317,10 @@ class LittleMan {
     var bgm = new Audio('./audio/fall.mp3');
     bgm.volume =  0.75
     bgm.play();
+    const storeObj  = Store()
+    const objBgm = computed(() => storeObj.useAppStore.getBgm)
+    console.log(objBgm.value)
+    objBgm.value.pause();
   }
 
   // X|Z 轴方向移动
