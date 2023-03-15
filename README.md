@@ -1,1 +1,3 @@
 # penguin-jump
+
+yum instll
