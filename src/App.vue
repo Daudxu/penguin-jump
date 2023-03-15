@@ -11,7 +11,9 @@
 import { onMounted, ref } from 'vue'
 
 import JumpGame from './object/JumpGame';
+import Store from './store/index.js'
 
+const Pinia  = Store()
 onMounted (()=>{
   new JumpGame().start();
 })
@@ -28,23 +30,10 @@ const audioBgm = () => {
 	bgm.volume = 0.75
 	bgm.play();
   bgm.loop = true;
+  Pinia.useAppStore.setBgm(bgm)
 }
 </script>
-
-<style scoped>
-* {
-  margin: 0;
-  padding: 0;
-}
-body{
-	padding: 0;
-	margin: 0;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	user-select: none;
-  overflow: hidden;
-}
-
+<style lang="stylus" scoped>
 .cl-start-shade {
   position: fixed;
   top: 0;
@@ -81,8 +70,6 @@ body{
   display: flex;
   justify-content: center;
   align-items: center;
-  
-  /* margin: 90px; */
 }
 
 .mask{
