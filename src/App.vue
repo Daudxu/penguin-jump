@@ -1,19 +1,23 @@
 <template>
+  <div class="score-panel">{{ score }}</div>
   <div class="cl-start-shade" v-if="isStart === 0">
      <div class="cl-start-main"> 
           <div class="cl-title"> jump jump jump </div>
           <div class="cl-button" @click="handleClickStart">start</div>
      </div>
   </div>
+
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 
 import JumpGame from './object/JumpGame';
 import Store from './store/index.js'
 
 const Pinia  = Store()
+const score = computed(() => Pinia.useAppStore.getScore)
+
 onMounted (()=>{
   new JumpGame().start();
 })
@@ -34,6 +38,18 @@ const audioBgm = () => {
 }
 </script>
 <style lang="stylus" scoped>
+  @font-face {
+      font-family: myFirstFont;
+      src: url('./assets/font/digital_number.ttf')
+  }
+.score-panel {
+    position: absolute;
+    display: inline-block;
+    left: 1em;
+    top: 1.5em;
+    font-size: 26px;
+    font-family: myFirstFont;
+}
 .cl-start-shade {
   position: fixed;
   top: 0;
@@ -44,33 +60,32 @@ const audioBgm = () => {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-.cl-start-shade .cl-start-main{
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   align-items: center;
+  .cl-start-main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .cl-title {
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 30px;
+  }
+  .cl-button {
+    font-size: 26px;
+    font-weight: 600;
+    width: 150px;
+    height: 60px;
+    line-height: 60px;
+    color: #ffffff;
+    background: #232323;
+    border-radius: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
-.cl-start-shade .cl-title {
-  font-size: 26px;
-  font-weight: 600;
-  margin-bottom: 30px;
-}
-
-.cl-start-shade .cl-button {
-  font-size: 26px;
-  font-weight: 600;
-  width: 150px;
-  height: 60px;
-  line-height: 60px;
-  color: #ffffff;
-  background: #232323;
-  border-radius: 18px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 .mask{
 	display: none;

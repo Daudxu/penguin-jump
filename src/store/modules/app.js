@@ -5,11 +5,13 @@ export default defineStore('storeApp', {
     return {
       themeType: 'light',
       bgm: '',
+      score: 0,
     }
   },
   getters: {
      getThemeType: (state) => state.themeType,
-     getBgm: (state) => state.bgm
+     getBgm: (state) => state.bgm,
+     getScore: (state) => state.score
   },
   actions: {
      setThemeType(themeType){
@@ -17,6 +19,9 @@ export default defineStore('storeApp', {
      },
      setBgm(bgm){
         this.bgm = bgm
+     },
+     setScore(score){
+        this.score = score
      }
   },
   persist: {

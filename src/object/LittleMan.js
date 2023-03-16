@@ -47,7 +47,7 @@ class LittleMan {
     this.headYPosition = LITTLE_MAN_HEIGHT;
     this.trunkScaleXZ = 1;
     this.boxScaleY = 1;
-
+    this.storeObj  = Store()
     // 残影
     this.tail = null;
 
@@ -307,6 +307,10 @@ class LittleMan {
 
   // 成功跳成功的背景音乐
   jumpBgm(){
+    const scoreObj = computed(() => this.storeObj.useAppStore.getScore)
+    let score = Number(scoreObj.value)
+    // console.log('score', ++score)
+    this.storeObj.useAppStore.setScore(++score)
     var bgm = new Audio('./audio/jump.mp3');
     bgm.volume =  0.75
     bgm.play();
@@ -317,8 +321,7 @@ class LittleMan {
     var bgm = new Audio('./audio/fall.mp3');
     bgm.volume =  0.75
     bgm.play();
-    const storeObj  = Store()
-    const objBgm = computed(() => storeObj.useAppStore.getBgm)
+    const objBgm = computed(() => this.storeObj.useAppStore.getBgm)
     objBgm.value.pause();
   }
 
