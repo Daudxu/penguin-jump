@@ -24,6 +24,7 @@ export default class JumpGame {
     // 初始化小人
     this.initLittleMan();
     // 每次动画后都要渲染
+    console.log("每次动画后都要渲染")
     setFrameAction(this.stage.render.bind(this.stage));
   }
 
@@ -38,9 +39,9 @@ export default class JumpGame {
     this.boxGroup.enterStage(this.stage);
   }
 
-  initLittleMan() {
+  async initLittleMan() {
     // 小人初始化
-    this.littleMan = new LittleMan(this.stage, this.boxGroup);
+    this.littleMan = await new LittleMan(this.stage, this.boxGroup);
     // 将小人给盒子一份，方便盒子移动的时候带上小人
     this.boxGroup.setLittleMan(this.littleMan);
     // 加入舞台

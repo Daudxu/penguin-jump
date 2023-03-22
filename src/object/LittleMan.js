@@ -20,7 +20,6 @@ import { computed, toRefs } from 'vue'
 import Store from '../store/index.js'
 
 class LittleMan {
-
   constructor (stage, boxGroup) {
     this.stage = stage;
     this.boxGroup = boxGroup;
@@ -69,7 +68,7 @@ class LittleMan {
     // 创建躯干
     this.initTrunk();
     // 模型
-    this.initGlbModel();
+    await this.initGlbModel();
     // 整体 = 头部 + 躯干
     this.initBody();
     // 初始化位置
@@ -188,9 +187,12 @@ class LittleMan {
           this.bodyRotate.translateY(LITTLE_MAN_HEIGHT/2);
           this.bodyRotate.add(gltf.scene);
           resolve(gltf.scene)
+          console.log("模型加载完成")
+          animateFrame()
       })
     })
-
+    // await objModel
+    // console.log("================")
     //  console.log('this.model', this.model)
     // bodyRotate 将旋转中心点移动到物体的中间部分
     // this.bodyRotate = new THREE.Group();
@@ -230,7 +232,7 @@ class LittleMan {
     // 监听按下事件
     container.addEventListener(mousedownName, (event) => {
       event.preventDefault();
-      console.log(111)
+      console.log('====mouserdown======')
       // 开始蓄力
       if(this.state === LittleMan.STATE.init) {
         this.state = LittleMan.STATE.storage;
