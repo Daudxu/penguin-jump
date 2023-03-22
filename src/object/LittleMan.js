@@ -1,5 +1,7 @@
 import * as THREE from "three";
 import TWEEN from '@tweenjs/tween.js';
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 import {
   LITTLE_MAN_WIDTH,
   LITTLE_MAN_HEIGHT,
@@ -29,6 +31,10 @@ class LittleMan {
     // 躯干
     // 将这个分开的原因在于跳跃的时候躯干被压缩，而头部不会被压缩
     this.trunk = null;
+    // 模型
+    this.model = null;
+    // 模型路径
+    this.modelPath = './1.glb';
     // 头部 + 躯干
     this.body = null;
     // 控制旋转的部分
@@ -57,13 +63,13 @@ class LittleMan {
     this.init();
   }
 
-  init () {
+  async init () {
     // 创建头部
     this.initHead();
     // 创建躯干
     this.initTrunk();
     // 模型
-    this.initModel();
+    this.initGlbModel();
     // 整体 = 头部 + 躯干
     this.initBody();
     // 初始化位置
@@ -129,42 +135,73 @@ class LittleMan {
     this.trunk.receiveShadow = true;
   }
 
-  initModel() {
+  async initGlbModel() {
+    // // return true
+    // let dracoLoader = new DRACOLoader();
+    // dracoLoader.setDecoderPath("./draco/gltf/");
+    // dracoLoader.setDecoderConfig({type: "js"});
+    // let loader = new  GLTFLoader();
+    // loader.setDRACOLoader(loader);
+    // var objModel = await new Promise((resolve) =>{
+    //   loader.load('./1.glb', (gltf) => {
+    //       gltf.scene.traverse(c => {
+    //           c.castShadow = true;
+    //       });
+    //       // gltf.scene.scale.set(2.2, 2.2, 2.2)
+    //       // gltf.scene.position.set(0, 0, 0)
+    //       // gltf.scene.rotation.y = Math.PI / -2
+    //       const clip = gltf.animations[0]
+    //       const mixer = new THREE.AnimationMixer(gltf.scene)
+    //       mixer.timeScale=1/5;
+    //       const action = mixer.clipAction(clip)
+    //       action.play()
+         
+    //       // this.scene.add(gltf.scene)
+    //       resolve(gltf.scene)
+    //   })
+    // })
+    // this.model = await objModel
+    // // return objModel
+  }
+   
+  // 身体
+  async initBody() {
     let dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath("./draco/gltf/");
     dracoLoader.setDecoderConfig({type: "js"});
     let loader = new  GLTFLoader();
     loader.setDRACOLoader(loader);
-    var objModel =  new Promise((resolve) =>{
-      loader.load(this.modelPath, (gltf) => {
-        
+    this.bodyRotate = new THREE.Group();
+    var objModel = new Promise((resolve) =>{
+      loader.load('./1.glb', (gltf) => {
           gltf.scene.traverse(c => {
               c.castShadow = true;
           });
-          gltf.scene.scale.set(2.2, 2.2, 2.2)
-          gltf.scene.position.set(0, 0, 0)
-          gltf.scene.rotation.y = Math.PI / -2
+          gltf.scene.scale.set(12, 12, 12)
+          gltf.scene.position.set(0, -12, 0)
+          gltf.scene.rotation.y = Math.PI / 2
           const clip = gltf.animations[0]
           const mixer = new THREE.AnimationMixer(gltf.scene)
           mixer.timeScale=1/5;
           const action = mixer.clipAction(clip)
           action.play()
-          // this.scene.add(gltf.scene)
-          model = gltf.scene
+          this.bodyRotate.translateY(LITTLE_MAN_HEIGHT/2);
+          this.bodyRotate.add(gltf.scene);
           resolve(gltf.scene)
       })
     })
-  }
 
-  // 身体
-  initBody() {
+    //  console.log('this.model', this.model)
     // bodyRotate 将旋转中心点移动到物体的中间部分
-    this.bodyRotate = new THREE.Group();
-    this.bodyRotate.translateY(LITTLE_MAN_HEIGHT/2);
-    this.bodyRotate.add(this.head);
-    this.head.translateY(-LITTLE_MAN_HEIGHT/2);
-    this.bodyRotate.add(this.trunk);
-    this.trunk.translateY(-LITTLE_MAN_HEIGHT/2);
+    // this.bodyRotate = new THREE.Group();
+    // this.bodyRotate.translateY(LITTLE_MAN_HEIGHT/2);
+    // this.bodyRotate.add(this.model);
+
+    // this.bodyRotate.translateY(LITTLE_MAN_HEIGHT/2);
+    // this.bodyRotate.add(this.head);
+    // this.head.translateY(-LITTLE_MAN_HEIGHT/2);
+    // this.bodyRotate.add(this.trunk);
+    // this.trunk.translateY(-LITTLE_MAN_HEIGHT/2);
 
     // 注意，body 的 position 还是在坐标原点，也就是小人的脚下
     this.body = new THREE.Group();
@@ -193,6 +230,7 @@ class LittleMan {
     // 监听按下事件
     container.addEventListener(mousedownName, (event) => {
       event.preventDefault();
+      console.log(111)
       // 开始蓄力
       if(this.state === LittleMan.STATE.init) {
         this.state = LittleMan.STATE.storage;
@@ -709,12 +747,14 @@ class LittleMan {
   // 加入舞台
   enterStage(stage) {
     stage.scene.add(this.body);
+    // stage.render()
+    // new Stage().render();
   }
 
 }
 
 LittleMan.STATE = {
-  // 初始
+  // 初始 
   init: 1,
   // 蓄力
   storage: 1<<1,
