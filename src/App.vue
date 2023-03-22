@@ -17,7 +17,9 @@
 
 <script setup>
 import { onMounted, ref, computed } from 'vue'
-
+import * as THREE from "three";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 import JumpGame from './object/JumpGame';
 import Store from './store/index.js'
 
@@ -27,23 +29,45 @@ const isStart = ref(0)
 const isRestart = ref(0)
 let play
 var bgm = new Audio('./audio/bgm.mp3');
+let modelObj 
+// play =  new JumpGame();
+onMounted (async ()=>{
+    let dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath("./draco/gltf/");
+    dracoLoader.setDecoderConfig({type: "js"});
+    let loader = new  GLTFLoader();
+    loader.setDRACOLoader(loader);
+    const objModel = new Promise((resolve) =>{
+        loader.load('./1.glb', (gltf) => {
+            gltf.scene.traverse(c => {
+                c.castShadow = true;
+            });
+            gltf.scene.scale.set(12, 12, 12)
+            gltf.scene.position.set(0, -12, 0)
+            gltf.scene.rotation.y = Math.PI / 2
+            const clip = gltf.animations[0]
+            const mixer = new THREE.AnimationMixer(gltf.scene)
+            mixer.timeScale=1/5;
+            const action = mixer.clipAction(clip)
+            action.play()
+            resolve(gltf.scene)
+        })
+    })
+    modelObj = await objModel
 
-onMounted (()=>{
-    play =  new JumpGame();
-    // handleClickStart()
-    play.start();
+    // console.log("modelObj", modelObj)
 })
 
 const handleClickStart = () => {
   isStart.value = 1
   isRestart.value = 1
+  play =  new JumpGame(modelObj);
+  play.start();
   audioBgm()
-  // play.start();
-  // console.log(play)
 }
 
 const handleClickRestart = () => {
-  play.restart();
+  play.restart(modelObj);
 }
 
 const audioBgm = () => {

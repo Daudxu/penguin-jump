@@ -20,7 +20,7 @@ import { computed, toRefs } from 'vue'
 import Store from '../store/index.js'
 
 class LittleMan {
-  constructor (stage, boxGroup) {
+  constructor (stage, boxGroup, modelObj) {
     this.stage = stage;
     this.boxGroup = boxGroup;
     // 定义小人的材质，方便复用
@@ -58,19 +58,16 @@ class LittleMan {
 
     // 粒子
     this.particle = new Particle();
-
-    this.init();
+    this.init(modelObj);
   }
 
-  async init () {
+  async init (modelObj) {
     // 创建头部
     this.initHead();
     // 创建躯干
     this.initTrunk();
-    // 模型
-    await this.initGlbModel();
     // 整体 = 头部 + 躯干
-    this.initBody();
+    this.initBody(modelObj);
     // 初始化位置
     this.initPosition();
     // 初始化拖尾
@@ -133,72 +130,14 @@ class LittleMan {
     // 躯干能接收头部的阴影
     this.trunk.receiveShadow = true;
   }
-
-  async initGlbModel() {
-    // // return true
-    // let dracoLoader = new DRACOLoader();
-    // dracoLoader.setDecoderPath("./draco/gltf/");
-    // dracoLoader.setDecoderConfig({type: "js"});
-    // let loader = new  GLTFLoader();
-    // loader.setDRACOLoader(loader);
-    // var objModel = await new Promise((resolve) =>{
-    //   loader.load('./1.glb', (gltf) => {
-    //       gltf.scene.traverse(c => {
-    //           c.castShadow = true;
-    //       });
-    //       // gltf.scene.scale.set(2.2, 2.2, 2.2)
-    //       // gltf.scene.position.set(0, 0, 0)
-    //       // gltf.scene.rotation.y = Math.PI / -2
-    //       const clip = gltf.animations[0]
-    //       const mixer = new THREE.AnimationMixer(gltf.scene)
-    //       mixer.timeScale=1/5;
-    //       const action = mixer.clipAction(clip)
-    //       action.play()
-         
-    //       // this.scene.add(gltf.scene)
-    //       resolve(gltf.scene)
-    //   })
-    // })
-    // this.model = await objModel
-    // // return objModel
-  }
    
   // 身体
-  async initBody() {
-    let dracoLoader = new DRACOLoader();
-    dracoLoader.setDecoderPath("./draco/gltf/");
-    dracoLoader.setDecoderConfig({type: "js"});
-    let loader = new  GLTFLoader();
-    loader.setDRACOLoader(loader);
-    this.bodyRotate = new THREE.Group();
-    var objModel = new Promise((resolve) =>{
-      loader.load('./1.glb', (gltf) => {
-          gltf.scene.traverse(c => {
-              c.castShadow = true;
-          });
-          gltf.scene.scale.set(12, 12, 12)
-          gltf.scene.position.set(0, -12, 0)
-          gltf.scene.rotation.y = Math.PI / 2
-          const clip = gltf.animations[0]
-          const mixer = new THREE.AnimationMixer(gltf.scene)
-          mixer.timeScale=1/5;
-          const action = mixer.clipAction(clip)
-          action.play()
-          this.bodyRotate.translateY(LITTLE_MAN_HEIGHT/2);
-          this.bodyRotate.add(gltf.scene);
-          resolve(gltf.scene)
-          console.log("模型加载完成")
-          animateFrame()
-      })
-    })
-    // await objModel
-    // console.log("================")
-    //  console.log('this.model', this.model)
+  async initBody(modelObj) {
     // bodyRotate 将旋转中心点移动到物体的中间部分
-    // this.bodyRotate = new THREE.Group();
-    // this.bodyRotate.translateY(LITTLE_MAN_HEIGHT/2);
-    // this.bodyRotate.add(this.model);
-
+    this.bodyRotate = new THREE.Group();
+    this.bodyRotate.translateY(LITTLE_MAN_HEIGHT/2);
+    this.bodyRotate.add(modelObj);
+       
     // this.bodyRotate.translateY(LITTLE_MAN_HEIGHT/2);
     // this.bodyRotate.add(this.head);
     // this.head.translateY(-LITTLE_MAN_HEIGHT/2);
@@ -232,7 +171,6 @@ class LittleMan {
     // 监听按下事件
     container.addEventListener(mousedownName, (event) => {
       event.preventDefault();
-      console.log('====mouserdown======')
       // 开始蓄力
       if(this.state === LittleMan.STATE.init) {
         this.state = LittleMan.STATE.storage;
