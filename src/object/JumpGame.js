@@ -55,18 +55,20 @@ export default class JumpGame {
     this.stage.render();
   }
 
-
+  // 重新开始
   async restart() {
-    // 重新开始
-    // this.init()
-   const res = await this.stage.restart(this.boxGroup);
+   const res = await this.stage.restart();
    if(res) {
     // 初始化盒子
     this.initBoxes();
     // 初始化小人
     this.initLittleMan();
     // 每次动画后都要渲染
-    setFrameAction(this.stage.render.bind(this.stage));
+    this.stage.render();
+    const _this = this
+    setInterval(()=>{
+      _this.stage.render();
+    }, 500)
    }
   }
 

@@ -25,18 +25,20 @@ const Pinia  = Store()
 const score = computed(() => Pinia.useAppStore.getScore)
 const isStart = ref(0)
 const isRestart = ref(0)
-const play =  new JumpGame();
+let play
 var bgm = new Audio('./audio/bgm.mp3');
 
 onMounted (()=>{
+    play =  new JumpGame();
     // handleClickStart()
+    play.start();
 })
 
 const handleClickStart = () => {
   isStart.value = 1
   isRestart.value = 1
   audioBgm()
-  play.start();
+  // play.start();
   // console.log(play)
 }
 
