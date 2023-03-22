@@ -191,7 +191,6 @@ export default class Stage {
   // 执行渲染
   render () {
     const {scene, camera, renderer, composer, stats} = this;
-    console.log('scene', scene)
     function animate() {
       if (DEV) {
         stats.begin();
