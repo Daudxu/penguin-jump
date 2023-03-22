@@ -1,5 +1,4 @@
 import Box from './Box';
-// import {BoxGeometry, Geometry, Mesh, MeshBasicMaterial, TextureLoader} from "three";
 import * as THREE from "three";
 import {recreateCubeUV, LEFT, TOP, BEHIND, RIGHT} from '../utils/MapUtil';
 import box_top from '../assets/images/box_top.png';

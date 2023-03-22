@@ -146,6 +146,7 @@ class LittleMan {
 
     // 注意，body 的 position 还是在坐标原点，也就是小人的脚下
     this.body = new THREE.Group();
+    // this.body.position.set(0, -5, 0)
     this.body.add(this.bodyRotate);
   }
 

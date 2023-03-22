@@ -232,6 +232,8 @@ export default class Stage {
     for (var i = allChildren.length - 1; i >= 0; i--) {
       if (allChildren[i] instanceof Group) {
         this.scene.remove(allChildren[i]);
+      }else if(allChildren[i].type === "Mesh") {
+        this.scene.remove(allChildren[i]);
       }
     }
     this.render ()

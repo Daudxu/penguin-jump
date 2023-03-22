@@ -6,6 +6,7 @@ import CubeBox from './CubeBox';
 import CylinderBox from './CylinderBox';
 import ExpressBox from './ExpressBox';
 import MagicCubeBox from './MagicCubeBox';
+import IceCubesBox from './IceCubesBox';
 import {animateFrame} from '../utils/TweenUtil';
 import {FAR, ENABLE_DISPOSE_BOX} from "../config/constant";
 
@@ -25,6 +26,10 @@ const BoxList = [{
   index: 3,
   box: MagicCubeBox,
   isStatic: true
+},{
+  index: 4,
+  box: IceCubesBox,
+  isStatic: true
 }];
 
 export default class BoxGroup {
@@ -41,6 +46,7 @@ export default class BoxGroup {
 
     this.boxInstance[2] = new ExpressBox(null).mesh;
     this.boxInstance[3] = new MagicCubeBox(null).mesh;
+    this.boxInstance[4] = new IceCubesBox(null).mesh;
   }
 
   getBoxInstance(index) {

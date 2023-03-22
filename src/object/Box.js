@@ -85,7 +85,6 @@ class Box {
   // 从备选的颜色中随机一个
   initColor() {
     const colorIndex = Math.floor(Math.random() * BOX_COLORS.length);
-
     this.color = BOX_COLORS[colorIndex];
   }
 

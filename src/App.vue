@@ -43,11 +43,11 @@ onMounted (async ()=>{
                 c.castShadow = true;
             });
             gltf.scene.scale.set(12, 12, 12)
-            gltf.scene.position.set(0, -12, 0)
+            gltf.scene.position.set(0, -5.5, 0)
             gltf.scene.rotation.y = Math.PI / 2
             const clip = gltf.animations[0]
             const mixer = new THREE.AnimationMixer(gltf.scene)
-            mixer.timeScale=1/5;
+            // mixer.timeScale=1/5;
             const action = mixer.clipAction(clip)
             action.play()
             resolve(gltf.scene)
