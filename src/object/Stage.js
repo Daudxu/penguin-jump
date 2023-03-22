@@ -10,6 +10,7 @@ import {
   DirectionalLight,
   OrthographicCamera,
   BoxHelper,
+  Group,
   Vector2
 } from 'three';
 
@@ -151,11 +152,9 @@ export default class Stage {
     if (ENABLE_IMAGE_POST_PROCESS) {
       // 相机添加到 composer
       this.composer.addPass(new RenderPass(this.scene, this.camera));
-
       const afterimagePass = new AfterimagePass();
       this.composer.addPass(afterimagePass);
     }
-
   }
 
   // 性能监控
@@ -192,7 +191,7 @@ export default class Stage {
   // 执行渲染
   render () {
     const {scene, camera, renderer, composer, stats} = this;
-
+    console.log('scene', scene)
     function animate() {
       if (DEV) {
         stats.begin();
@@ -227,5 +226,17 @@ export default class Stage {
         stats.end();
       }
     }
+  }
+
+   restart() {
+    var allChildren = this.scene.children;
+    for (var i = allChildren.length - 1; i >= 0; i--) {
+      if (allChildren[i] instanceof Group) {
+        this.scene.remove(allChildren[i]);
+      }
+    }
+    this.render ()
+    return true
+
   }
 }

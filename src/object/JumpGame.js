@@ -41,12 +41,10 @@ export default class JumpGame {
   initLittleMan() {
     // 小人初始化
     this.littleMan = new LittleMan(this.stage, this.boxGroup);
-    console.log(this.littleMan)
     // 将小人给盒子一份，方便盒子移动的时候带上小人
     this.boxGroup.setLittleMan(this.littleMan);
     // 加入舞台
     this.littleMan.enterStage(this.stage);
-
     // 更新盒子和小人的位置
     this.boxGroup.updatePosition({
       duration: 0
@@ -57,8 +55,19 @@ export default class JumpGame {
     this.stage.render();
   }
 
-  restart() {
+
+  async restart() {
     // 重新开始
+    // this.init()
+   const res = await this.stage.restart(this.boxGroup);
+   if(res) {
+    // 初始化盒子
+    this.initBoxes();
+    // 初始化小人
+    this.initLittleMan();
+    // 每次动画后都要渲染
+    setFrameAction(this.stage.render.bind(this.stage));
+   }
   }
 
 }

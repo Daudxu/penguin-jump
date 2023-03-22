@@ -1,11 +1,17 @@
 <template>
-  <div class="score-panel">{{ score }}</div>
+  <div class="score-panel" @click="handleClickRestart">{{ score }}</div>
   <div class="cl-start-shade" v-if="isStart === 0">
      <div class="cl-start-main"> 
-          <div class="cl-title"> jump jump jump </div>
+          <div class="cl-title"> jump</div>
           <div class="cl-button" @click="handleClickStart">start</div>
      </div>
   </div>
+  <!-- <div class="cl-start-shade" v-if="isRestart === 1">
+     <div class="cl-start-main"> 
+          <div class="cl-title"> jump</div>
+          <div class="cl-button" @click="handleClickRestart">restart</div>
+     </div>
+  </div> -->
 
 </template>
 
@@ -17,20 +23,28 @@ import Store from './store/index.js'
 
 const Pinia  = Store()
 const score = computed(() => Pinia.useAppStore.getScore)
+const isStart = ref(0)
+const isRestart = ref(0)
+const play =  new JumpGame();
+var bgm = new Audio('./audio/bgm.mp3');
 
 onMounted (()=>{
-  new JumpGame().start();
+    // handleClickStart()
 })
-
-const isStart = ref(0)
 
 const handleClickStart = () => {
   isStart.value = 1
+  isRestart.value = 1
   audioBgm()
+  play.start();
+  // console.log(play)
+}
+
+const handleClickRestart = () => {
+  play.restart();
 }
 
 const audioBgm = () => {
-	var bgm = new Audio('./audio/bgm.mp3');
 	bgm.volume = 0.75
 	bgm.play();
   bgm.loop = true;

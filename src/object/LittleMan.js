@@ -62,6 +62,8 @@ class LittleMan {
     this.initHead();
     // 创建躯干
     this.initTrunk();
+    // 模型
+    this.initModel();
     // 整体 = 头部 + 躯干
     this.initBody();
     // 初始化位置
@@ -125,6 +127,33 @@ class LittleMan {
     this.trunk.castShadow = true;
     // 躯干能接收头部的阴影
     this.trunk.receiveShadow = true;
+  }
+
+  initModel() {
+    let dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath("./draco/gltf/");
+    dracoLoader.setDecoderConfig({type: "js"});
+    let loader = new  GLTFLoader();
+    loader.setDRACOLoader(loader);
+    var objModel =  new Promise((resolve) =>{
+      loader.load(this.modelPath, (gltf) => {
+        
+          gltf.scene.traverse(c => {
+              c.castShadow = true;
+          });
+          gltf.scene.scale.set(2.2, 2.2, 2.2)
+          gltf.scene.position.set(0, 0, 0)
+          gltf.scene.rotation.y = Math.PI / -2
+          const clip = gltf.animations[0]
+          const mixer = new THREE.AnimationMixer(gltf.scene)
+          mixer.timeScale=1/5;
+          const action = mixer.clipAction(clip)
+          action.play()
+          // this.scene.add(gltf.scene)
+          model = gltf.scene
+          resolve(gltf.scene)
+      })
+    })
   }
 
   // 身体
