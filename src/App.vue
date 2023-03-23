@@ -143,7 +143,8 @@ const handleClickRestart = () => {
   Pinia.useAppStore.setScore(0)
   Pinia.useAppStore.setIsFail(0)
   play.restart(modelObj);
-  audioBgm()
+  bgm.currentTime = 0
+  bgm.play();
 }
 
 const audioBgm = () => {
