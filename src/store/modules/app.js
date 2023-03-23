@@ -6,12 +6,14 @@ export default defineStore('storeApp', {
       themeType: 'light',
       bgm: '',
       score: 0,
+      isFail: 0,
     }
   },
   getters: {
      getThemeType: (state) => state.themeType,
      getBgm: (state) => state.bgm,
-     getScore: (state) => state.score
+     getScore: (state) => state.score,
+     getIsFail: (state) => state.isFail
   },
   actions: {
      setThemeType(themeType){
@@ -22,6 +24,9 @@ export default defineStore('storeApp', {
      },
      setScore(score){
         this.score = score
+     },
+     setIsFail(isFail){
+        this.isFail = isFail
      }
   },
   persist: {

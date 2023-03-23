@@ -330,6 +330,7 @@ class LittleMan {
     bgm.volume =  0.75
     bgm.play();
     const objBgm = computed(() => this.storeObj.useAppStore.getBgm)
+    this.storeObj.useAppStore.setIsFail(1)
     objBgm.value.pause();
   }
 
