@@ -35,9 +35,9 @@ export default class Particle {
       alphaTest: 0.3
     });
 
-    // 绿色材料
+    // 蓝色材料
     const greenParticleMaterial = new MeshBasicMaterial({
-      color: 0x52c41a,
+      color: 0x007aff,
       map: new TextureLoader().load(Dot),
       alphaTest: 0.3
     });
@@ -50,7 +50,7 @@ export default class Particle {
       this.particles.push(particle);
     }
 
-    // 生成绿色粒子
+    // 生成蓝色粒子
     for (let i = 0; i < PARTICLE_NUM/2; ++i) {
       const particle = new Mesh(particleGeometry, greenParticleMaterial);
       this.particles.push(particle);
@@ -210,7 +210,6 @@ export default class Particle {
         particle.visible = false;
       })
       .start();
-
     animateFrame();
   }
 }

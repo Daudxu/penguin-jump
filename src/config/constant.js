@@ -62,7 +62,7 @@ const HIGH_JUMP = WIDTH > HEIGHT ? HEIGHT/3.5 : WIDTH/3.5;
 
 
 // 粒子数量
-const PARTICLE_NUM = 2 * 8;
+const PARTICLE_NUM = 2 * 80;
 // 粒子最小距离
 const PARTICLE_MIN_DISTANCE = LITTLE_MAN_WIDTH/2;
 // 粒子最大距离
