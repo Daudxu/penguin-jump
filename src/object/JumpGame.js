@@ -24,13 +24,11 @@ export default class JumpGame {
     // 初始化小人
     this.initLittleMan(modelObj);
     // 每次动画后都要渲染
-    console.log("每次动画后都要渲染")
     setFrameAction(this.stage.render.bind(this.stage));
   }
 
   initBoxes() {
     this.boxGroup = new BoxGroup();
-
     // 初始化首个盒子
     this.boxGroup.createBox();
     // 初始化第二个盒子
