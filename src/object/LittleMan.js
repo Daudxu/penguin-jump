@@ -317,7 +317,6 @@ class LittleMan {
   jumpBgm(){
     const scoreObj = computed(() => this.storeObj.useAppStore.getScore)
     let score = Number(scoreObj.value)
-    // console.log('score', ++score)
     this.storeObj.useAppStore.setScore(++score)
     var bgm = new Audio('./audio/jump.mp3');
     bgm.volume =  0.75
