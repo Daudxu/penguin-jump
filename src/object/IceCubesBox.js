@@ -1,8 +1,7 @@
 import Box from './Box';
-// import {BoxGeometry, Mesh, MeshLambertMaterial, TextureLoader} from "three";
 import * as THREE from "three";
 import {recreateCubeUV, LEFT, TOP, BEHIND} from '../utils/MapUtil';
-import express from '../assets/images/ice.png';
+import express from '../assets/textures/ice2.png';
 
 export default class IceCubesBox extends Box {
   constructor(prev) {

@@ -26,6 +26,8 @@ import {
   ORBIT_CONTROL,
   ENABLE_IMAGE_POST_PROCESS
 } from '../config/constant';
+import { computed } from 'vue'
+import Store from '../store/index.js'
 
 // DEBUG 时候用的视角控制器
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
@@ -53,6 +55,8 @@ export default class Stage {
     this.composer = null;
     // 性能监控
     this.stats = null;
+    // 状态对象
+    this.storeObj  = Store()
 
     this.init();
   }
@@ -207,6 +211,14 @@ export default class Stage {
       }
       requestAnimationFrame(animate);
     }
+    const isStart = computed(() => this.storeObj.useAppStore.getIsStart)
+    if(!isStart.value){
+      setTimeout(()=> {
+        animate()
+        this.storeObj.useAppStore.setIsStart(1)
+      }, 100)
+    }
+ 
 
     if (DEV && ORBIT_CONTROL) {
       animate();

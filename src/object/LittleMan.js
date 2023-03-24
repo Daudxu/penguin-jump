@@ -15,8 +15,7 @@ import {animateFrame} from '../utils/TweenUtil';
 import Box from './Box';
 import Particle from './Particle';
 import Tail from './Tail';
-import {storeToRefs} from "pinia"
-import { computed, toRefs } from 'vue'
+import { computed } from 'vue'
 import Store from '../store/index.js'
 
 class LittleMan {

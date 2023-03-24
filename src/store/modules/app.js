@@ -6,6 +6,7 @@ export default defineStore('storeApp', {
       themeType: 'light',
       bgm: '',
       score: 0,
+      isStart: 0,
       isFail: 0,
     }
   },
@@ -13,6 +14,7 @@ export default defineStore('storeApp', {
      getThemeType: (state) => state.themeType,
      getBgm: (state) => state.bgm,
      getScore: (state) => state.score,
+     getIsStart: (state) => state.isStart,
      getIsFail: (state) => state.isFail
   },
   actions: {
@@ -24,6 +26,9 @@ export default defineStore('storeApp', {
      },
      setScore(score){
         this.score = score
+     },
+     setIsStart(isStart){
+        this.isStart = isStart
      },
      setIsFail(isFail){
         this.isFail = isFail
